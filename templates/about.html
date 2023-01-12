@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CDN Links for echarts and font-awesome icons -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300|Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>TSP About Page</title>
+</head>
+  <body>
+    <div class="header about-header">
+      <a href="/index"><img class="logo" src="/static/images/FrontPage_TSP3.png"></a>
+      <div class="search-container">
+          <form>
+            <input type="text" id="about_search" placeholder="Search...">
+            <i class="fa fa-search"></i>
+          </form>
+      </div>
+      <div class="header-right">
+        <a class="active" href="/index">Home</a>
+        <a href="/about">About</a>
+      </div>
+      <div class="burger-nav">
+          <i class="fa fa-bars bar" onclick="burgerMenu();" id="bars"></i>
+         <div class="burger-links" id="myDropdown" style="display: none">
+          <a href="/index" id="HomeLnk" onclick="toggleMenu(this.id)">Home</a>
+          <a href="/about" id="AboutWeb" onclick="toggleMenu(this.id)">About</a>
+         </div>
+      </div>
+  </div>
+  <ul id="list">
+      <br>
+      {% for i in range (0, 20) %}
+      <li class="list_item" onclick="location.href='./rates/{{store_providers[i]}}'">
+          <h5>
+          <a class="Store_Info" href="./rates/{{store_providers[i]}}" type="{{ store_providers[i] }}">{{ store_providers[i] }}</a>
+          </h5>
+          <p>Best Cashback Rate: {{ store_rates[i] }}</p>
+      </li>
+      {% endfor %}
+  </ul>
+  <div id="NoItemMsg">
+      <h3>No such store exists. Please enter something else.</h3>
+  </div>
+  <br>
+  <h1 id="about_tsp_title" class="align-items-center justify-content-center">About TSP</h1>
+  <div id="about_tsp_pic" class="container center" style="text-align: center;">
+    <img src="../static/images/TSP.jpg">
+  </div>
+  <div id="about_box" class="container about_container">
+    <p class="center about_text">
+      TSP or The Saving Portal is an automatic cashback monitoring system that automatically scrapes the best
+      cashback rates for a whole variety of stores for users to use and benefit from in order to survive
+      and overcome these harsh times when there is still an ongoing pandemic negatively affecting many
+      countries. There is also going to be a recession that will be worse than the 2008 recession and it
+      will also negatively impact millions of people in terms of their financial standing, income, and
+      much more.<br>
+      However, to solve and help alleviate the financial issues of many citizens, The Saving Portal will
+      allow users to save money and get money back from each purchase through our website by allowing users
+      to view the best cashback rates of every store available in our site while also giving them an easy
+      way to access and go inside these reward platforms and check out other benefits they offer for a
+      particular store that the user has interest in buying a product from in which our web application
+      displays it both numerically and visually in the form of a bar chart.
+    </p>
+  </div>
+  <script src="../static/js/script.js"></script>
+  <script src="../static/js/aboutSearch.js"></script>
+  </body>
+</html>

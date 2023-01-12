@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CDN Links for echarts and font-awesome icons -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300|Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>TSP Rates Page</title>
+</head>
+<body class="rates-body">
+    <div class="header rates-header">
+        <a href="/index"><img class="logo" src="/static/images/FrontPage_TSP3.png"></a>
+        <div class="search-container">
+            <form>
+              <input type="text" id="rate_search" placeholder="Search...">
+              <i class="fa fa-search"></i>
+            </form>
+        </div>
+        <div class="header-right">
+          <a class="active" href="/index">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="burger-nav">
+            <i class="fa fa-bars bar" onclick="burgerMenu();" id="bars"></i>
+           <div class="burger-links" id="myDropdown" style="display: none">
+            <a href="/index" id="HomeLnk" onclick="toggleMenu(this.id)">Home</a>
+            <a href="/about" id="AboutWeb" onclick="toggleMenu(this.id)">About</a>
+           </div>
+        </div>
+    </div>
+    <ul id="list">
+        <br>
+        {% for i in range (0, 20) %}
+        <li class="list_item" onclick="location.href='./{{store_providers[i]}}'">
+            <h5>
+            <a class="Store_Info" href="./{{store_providers[i]}}" type="{{ store_providers[i] }}">{{ store_providers[i] }}</a>
+            </h5>
+            <p>Best Cashback Rate: {{ store_rates[i] }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <div id="NoItemMsg">
+        <h3>No such store exists. Please enter something else.</h3>
+    </div>
+    <br>
+    <h1 id="store_title" class="align-items-center justify-content-center">{{ store }}</h1>
+    <div class="hidden" style="visibility: hidden;">
+        <span>Reward Platforms w/ Highest Cashback Rates: </span>
+        <span id="plat1">{{top5_stores[0]}}</span>
+        <span id="plat2">{{top5_stores[1]}}</span>
+        <span id="plat3">{{top5_stores[2]}}</span>
+        <span id="plat4">{{top5_stores[3]}}</span>
+        <span id="plat5">{{top5_stores[4]}}</span>
+        <span>Highest Cashback Rates for {{ store }}: </span>
+        <span id="num1">{{top5_rates[0]}}</span>
+        <span id="num2">{{top5_rates[1]}}</span>
+        <span id="num3">{{top5_rates[2]}}</span>
+        <span id="num4">{{top5_rates[3]}}</span>
+        <span id="num5">{{top5_rates[4]}}</span>
+    </div>
+
+    <div class="chart-container">
+        <div id="graph" class="center" style="width: 1300px; height:650px; margin-left: auto; margin-right: auto;"></div>
+    </div>
+    <script type="text/javascript">
+        let myChart = echarts.init(document.getElementById('graph'));
+        let arr = document.getElementById('num1').textContent;
+        let arr2 = document.getElementById('num2').textContent;
+        let arr3 = document.getElementById('num3').textContent;
+        let arr4 = document.getElementById('num4').textContent;
+        let arr5 = document.getElementById('num5').textContent;
+        let plat = document.getElementById('plat1').textContent;
+        let plat2 = document.getElementById('plat2').textContent;
+        let plat3 = document.getElementById('plat3').textContent;
+        let plat4 = document.getElementById('plat4').textContent;
+        let plat5 = document.getElementById('plat5').textContent;
+        let name = document.getElementById('store_title').textContent;
+
+        let plats = [plat, plat2, plat3, plat4, plat5];
+        const result = plats.filter(x => x !== 'Placeholder');
+        console.log(result)
+
+        let arrs = [arr, arr2, arr3, arr4, arr5];
+        const result2 = arrs.filter(x => x !== 0);
+        console.log(result2)
+
+        myChart.hideLoading();
+
+        var option = {
+            baseOption: {
+                title: {
+                    color: "white",
+                    text: name + "'s Top Cashback Rates"
+                },
+                textStyle: {
+                    fontFamily: "Montserrat",
+                    color: "white",
+                    fontSize: 14
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: { type: "cross" }
+                },
+                legend: {
+                    textStyle: {
+                        color: "white"
+                    }
+                },
+                xAxis: {
+                    name: "Platforms",
+                    data: result,
+                    color: "white",
+                    axisLabel: {
+                        color: "white",
+                        fontSize: 14
+                    }
+                },
+                yAxis: {
+                    name: "Cashback Rates",
+                    color: "white",
+                    axisLabel: {
+                        color: "white",
+                        formatter: "{value}%",
+                        fontSize: 14
+                    }
+                },
+                series: [{
+                    name: "Cashback Rate",
+                    type: "bar",
+                    barWidth: "20%",
+                    data: result2
+                }]
+            },
+            media: [{
+                query: { maxWidth: 500 }, // write rule here
+                option: {
+                    // write options accordingly
+                    textStyle: {
+                        fontSize: 25
+                    },
+                    xAxis: {
+                        axisLabel: {
+                            color: "white",
+                            fontSize: 25
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: {
+                            color: "white",
+                            formatter: "{value}%",
+                            fontSize: 25
+                        }
+                    },
+                    series: [{
+                        name: "Cashback Rate",
+                        type: "bar",
+                        barWidth: "100%",
+                        data: result2
+                    }],
+                },
+            }],
+        };
+
+        // Display the chart using the configuration items and data just specified.
+        myChart.setOption(option);
+
+        function updateChartOption() {
+            let windowWidth = window.innerWidth;
+            let option = {
+                // define your base option here
+                baseOption: {
+                    title: {
+                        color: "white",
+                        text: name + "'s Top Cashback Rates"
+                    },
+                    textStyle: {
+                        fontFamily: "Montserrat",
+                        color: "white",
+                        fontSize: 14
+                    },
+                    tooltip: {
+                        trigger: "axis",
+                        axisPointer: { type: "cross" }
+                    },
+                    legend: {
+                        textStyle: {
+                            color: "white"
+                        }
+                    },
+                    xAxis: {
+                        name: "Platforms",
+                        data: result,
+                        color: "white",
+                        axisLabel: {
+                            color: "white",
+                            fontSize: 14
+                        }
+                    },
+                    yAxis: {
+                        name: "Cashback Rates",
+                        color: "white",
+                        axisLabel: {
+                            color: "white",
+                            formatter: "{value}%",
+                            fontSize: 14
+                        }
+                    },
+                    series: [{
+                        name: "Cashback Rate",
+                        type: "bar",
+                        barWidth: "20%",
+                        data: result2
+                    }]
+                }
+            };
+            if (windowWidth <= 500) {
+                option.textStyle = {
+                    fontSize: 25
+                };
+                option.xAxis.axisLabel = {
+                    color: "white",
+                    fontSize: 25
+                };
+                option.yAxis.axisLabel = {
+                    color: "white",
+                    formatter: "{value}%",
+                    fontSize: 25
+                };
+                option.series[0].barWidth = "100%";
+            }
+            myChart.setOption(option);
+            console.log(this.option)
+        }
+
+        window.addEventListener("resize", updateChartOption);
+        window.addEventListener("load", updateChartOption);
+
+    </script>
+    <br><br>
+    <div style="padding: 1.6em;">
+        <table class="table Providers_Table">
+            <tr>
+            <th>Reward Platforms</th>
+            <th>Best Rates</th>
+            </tr>
+            {% for i in range(0, len) %}
+            <tr onclick="location.href='{{ links[i] }}'">
+                <td><a class="Plat_Info" href="{{ links[i] }}"><img class="Plat_Logos" src="{{ imgs[i] }}">{{ providers[i] }}</a></td>
+                <td>{{ rates[i] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/rateSearch.js"></script>
+</body>
+</html>
