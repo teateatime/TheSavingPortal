@@ -1,6 +1,6 @@
 # TheSavingPortal
 
-## Technologies Used:
+### Technologies Used:
 * HTML
 * CSS
 * JavaScript
