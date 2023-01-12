@@ -20,9 +20,22 @@ Here is one of the sources to help you with getting git setup in your system.
                                                                             
 https://git-scm.com/
 
+Next to install the necessary packages for the imports used in python, you can use the following pip commands in the terminal:
+
+`pip install flask`: This command installs the Flask package, which is necessary for creating and running a Flask web application.
+
+`pip install selenium`: This command installs the Selenium package, which is necessary for interacting with a web browser using the Selenium library.
+
+`pip install chromedriver-autoinstaller`: This command installs the chromedriver_autoinstaller package, which is necessary for automatically installing the ChromeDriver executable, which is needed for controlling the Chrome browser using Selenium.
+
+Note that these commands assumes that you have python and pip installed in your system.
+
+Also, to run the script with selenium, you need to have Chrome browser installed in your system.
+
+
 Clone the Repository
 ---------------------------------------------------------------
-Once you have git setup, enter this git command to clone the repository so that you can use it for your own use.
+Once you have git setup and the other neccessary packages, enter this git command to clone the repository so that you can use it for your own use.
 
 `git clone https://github.com/teateatime/TheSavingPortal.git`
 
