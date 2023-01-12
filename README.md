@@ -1,13 +1,13 @@
 # TheSavingPortal
 
+The Saving Portal is an automated cashback monitoring system that automatically scans the best cashback rates of many platforms and displays those values both numerically and statistically.
+
 ### Technologies Used:
 * HTML
 * CSS
 * JavaScript
 * BootStrap
 * Python
-
-The Saving Portal is an automated cashback monitoring system that automatically scans the best cashback rates of many platforms and displays those values both numerically and statistically.
 
 How to set it up and use it:
 ---------------------------------------------------------------
