@@ -24,7 +24,7 @@ Clone the Repository
 ---------------------------------------------------------------
 Once you have git setup, enter this git command to clone the repository so that you can use it for your own use.
 
-`git clone git@github.com:teateatime/TheSavingPortal.git`
+`git clone https://github.com/teateatime/TheSavingPortal.git`
 
 Once successfully cloned, type in `cd TheSavingPortal` and then type in `python scraper.py` inside the terminal/cmd to use the program.
 
