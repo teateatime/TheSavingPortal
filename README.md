@@ -1,6 +1,6 @@
 # TheSavingPortal
 
-Technologies Used:
+## Technologies Used:
 * HTML
 * CSS
 * JavaScript
@@ -10,9 +10,8 @@ Technologies Used:
 The Saving Portal is an automated cashback monitoring system that automatically scans the best cashback rates of many platforms and displays those values both numerically and statistically.
 
 How to set it up and use it:
-
-First, check if you have git installed.
 ---------------------------------------------------------------
+First, check if you have git installed.
 
 You can do this by entering `git --version` inside the terminal.
 
@@ -35,15 +34,15 @@ of multiple stores at your leisure.
 
 Screenshots
 ---------------------------------------------------------------
-Main Page
+### Main Page
 
 ![MainTSPPage](https://github.com/teateatime/TheSavingPortal/blob/main/static/screenshots/TSP_MainPage.png)
 
-Rates Page (Macy's)
+### Rates Page (Macy's)
 
 ![TSP_MacysRatePageImg](https://github.com/teateatime/TheSavingPortal/blob/main/static/screenshots/TSP_MacysRatePage.png)
 
-About Page
+### About Page
 
 ![AboutTSP](https://github.com/teateatime/TheSavingPortal/blob/main/static/screenshots/TSP_AboutPage.png)
 
