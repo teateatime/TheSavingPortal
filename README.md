@@ -58,6 +58,3 @@ Screenshots
 ### About Page
 
 ![AboutTSP](https://github.com/teateatime/TheSavingPortal/blob/main/static/screenshots/TSP_AboutPage.png)
-
-## Problems
-* Site hosting
