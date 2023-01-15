@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import chromedriver_autoinstaller
-
+import requests
 import re
 
 chromedriver_autoinstaller.install()
@@ -25,22 +25,21 @@ def index():
 
     rate_box = driver.find_element_by_css_selector('div.fl div.fl table.cbm2 tbody')
 
-    for item in rate_box.find_elements_by_css_selector('tr'):
-        if (item.text.find('%') != -1):
-            tmp = item.text.split("%")[0]
-            tmp = re.sub("[^A-Z.a-z ]", "", tmp)
-            tmp = tmp[::-1].replace('.'[::-1], '', tmp.count('.')-1)[::-1]
-            tmp = tmp[:-1]
-            providers.append(tmp)
-        else: continue
+    # Use a list comprehension to find all the rows that contain a % sign
+    rows = [row for row in rate_box.find_elements_by_css_selector('tr') if '%' in row.text]
 
-        for cell2 in item.find_elements_by_css_selector('td:nth-child(3) a'):
-            if (cell2.text.find('%') != -1):
-                tmp = cell2.text.split("%")[0]
-                rates.append(tmp + '%')
-            else: continue
+    for item in rows:
+        tmp = item.text.split("%")[0]
+        tmp = re.sub("[^A-Z.a-z ]", "", tmp)
+        tmp = tmp[:-1]
+        providers.append(tmp)
 
-    return render_template('index.html', len = len(rates), rates = rates, providers = providers)
+        cell2 = item.find_element_by_css_selector('td:nth-child(3) a')
+        if '%' in cell2.text:
+            tmp = cell2.text.split("%")[0]
+            rates.append(tmp + '%')
+
+    return render_template('index.html', len=len(rates), rates=rates, providers=providers)
 
 @app.route('/rates/<store>', methods=['GET'])
 def ratepg(store):
@@ -57,11 +56,7 @@ def ratepg(store):
     tbody = driver.find_element_by_css_selector('div.half.fl table tbody')
 
     for row in tbody.find_elements_by_tag_name('tr'):
-        if ("Up to" in row.text):
-            continue
-        if ("up to" in row.text):
-            continue
-        if ("$" in row.text):
+        if ("Up to" in row.text or "up to" in row.text or "$" in row.text):
             continue
         if (row.text.find('%') != -1):
             tmp = row.text.split("%")[0]
@@ -72,11 +67,7 @@ def ratepg(store):
         else: continue
 
         for cell2 in row.find_elements_by_css_selector('td.l span'):
-            if ("Up to" in row.text):
-                continue
-            if ("up to" in row.text):
-                continue
-            if ("$" in row.text):
+            if ("Up to" in row.text or "up to" in row.text or "$" in row.text):
                 continue
             if (cell2.text.find('%') != -1):
                 tmp = cell2.text.split(' ')[0]
@@ -110,20 +101,18 @@ def ratepg(store):
 
     rate_box = driver.find_element_by_css_selector('div.fl div.fl table.cbm2 tbody')
 
-    for item in rate_box.find_elements_by_css_selector('tr'):
-        if (item.text.find('%') != -1):
-            tmp = item.text.split("%")[0]
-            tmp = re.sub("[^A-Z.a-z ]", "", tmp)
-            tmp = tmp[::-1].replace('.'[::-1], '', tmp.count('.')-1)[::-1]
-            tmp = tmp[:-1]
-            store_providers.append(tmp)
-        else: continue
+    rows = [row for row in rate_box.find_elements_by_css_selector('tr') if '%' in row.text]
 
-        for cell2 in item.find_elements_by_css_selector('td:nth-child(3) a'):
-            if (cell2.text.find('%') != -1):
-                tmp = cell2.text.split("%")[0]
-                store_rates.append(tmp + '%')
-            else: continue
+    for item in rows:
+        tmp = item.text.split("%")[0]
+        tmp = re.sub("[^A-Z.a-z ]", "", tmp)
+        tmp = tmp[:-1]
+        store_providers.append(tmp)
+
+        cell2 = item.find_element_by_css_selector('td:nth-child(3) a')
+        if '%' in cell2.text:
+            tmp = cell2.text.split("%")[0]
+            store_rates.append(tmp + '%')
 
     return render_template('rates.html', len = len(rates), rates = rates,
     providers = providers,  img_logo = img_logo, links = links, imgs = imgs, store = store,
@@ -139,20 +128,19 @@ def aboutpg():
 
     rate_box = driver.find_element_by_css_selector('div.fl div.fl table.cbm2 tbody')
 
-    for item in rate_box.find_elements_by_css_selector('tr'):
-        if (item.text.find('%') != -1):
-            tmp = item.text.split("%")[0]
-            tmp = re.sub("[^A-Z.a-z ]", "", tmp)
-            tmp = tmp[::-1].replace('.'[::-1], '', tmp.count('.')-1)[::-1]
-            tmp = tmp[:-1]
-            store_providers.append(tmp)
-        else: continue
+    # Use a list comprehension to find all the rows that contain a % sign
+    rows = [row for row in rate_box.find_elements_by_css_selector('tr') if '%' in row.text]
 
-        for cell2 in item.find_elements_by_css_selector('td:nth-child(3) a'):
-            if (cell2.text.find('%') != -1):
-                tmp = cell2.text.split("%")[0]
-                store_rates.append(tmp + '%')
-            else: continue
+    for item in rows:
+        tmp = item.text.split("%")[0]
+        tmp = re.sub("[^A-Z.a-z ]", "", tmp)
+        tmp = tmp[:-1]
+        store_providers.append(tmp)
+
+        cell2 = item.find_element_by_css_selector('td:nth-child(3) a')
+        if '%' in cell2.text:
+            tmp = cell2.text.split("%")[0]
+            store_rates.append(tmp + '%')
 
     return render_template('about.html', store_rates = store_rates, store_providers = store_providers)
 
