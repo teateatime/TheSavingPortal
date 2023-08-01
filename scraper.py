@@ -7,21 +7,21 @@ from flask import Flask, redirect, url_for
 import chromedriver_autoinstaller
 import re
 
-chromedriver_autoinstaller.install()
-options = Options()
-options.add_argument("--headless")
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-options.add_argument("--window-size=1920,1200")
-
-driver = webdriver.Chrome(options=options)
-
+# chromedriver_autoinstaller.install()
 # options = Options()
 # options.add_argument("--headless")
 # options.add_experimental_option('excludeSwitches', ['enable-logging'])
 # options.add_argument("--window-size=1920,1200")
 
-# service = Service('/driver/chromedriver.exe')
-# driver = webdriver.Chrome(service=service, options=options)
+# driver = webdriver.Chrome(options=options)
+
+options = Options()
+options.add_argument("--headless")
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+options.add_argument("--window-size=1920,1200")
+
+service = Service('/driver/chromedriver.exe')
+driver = webdriver.Chrome(service=service, options=options)
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
